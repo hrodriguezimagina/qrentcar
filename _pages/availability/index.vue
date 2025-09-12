@@ -56,37 +56,48 @@
 		</div>
 
 		<!-- grid -->
-		<div class="">
-			<div v-if="showCalendar" class="tw-flex tw-flex-row tw-py-4">
-				<!-- gammas -->
-				<div class="tw-py-4">
-					<template v-for="(item, index) in rows ">
-						<div
-							@click="item.gamma ? openModalGammaOffice(item) : null"
-							class="tw-w-[160px] tw-border-2 tw-p-2 "
-							:class="[
-								item?.gamma ? 'tw-min-h-[117px] tw-cursor-pointer  hover:tw-bg-sky-100 hover:tw-border-sky-300' : 'tw-h-[60px]', item?.gamma?.title ? '' : 'tw-bg-gray-100']"
-						>
-							<q-chip
-								v-if="item?.gamma"
-								square
-								color="primary"
-								text-color="white"
-							>
-								{{ item.gamma.title }}
-							</q-chip>
+		<div class="tw-my-4">
+			<div v-if="showCalendar" class="tw-flex tw-flex-row">
 
-							<p v-if="item?.gamma">
-								{{ item.gamma.summary }}
-							</p>
-						</div>
-					</template>
-				</div>
 				<!--- days -->
-				<div class="tw-overflow-x-auto tw-py-4">
+				<div class=" tw-py-4 tw-overflow-x-auto tw-h-[600px]">
 					<template v-for="(item, index) in rows ">
 						<div class="tw-grid tw-grid-flow-col">
-							<template v-for="(day, index) in nextDays ">
+							<template v-for="(day, indexDay) in nextDays ">
+								<div
+									v-if="indexDay == 0"
+										@click="item.gamma ? openModalGammaOffice(item) : null"
+										class="tw-w-[160px] tw-border-2 tw-p-2 "
+										:class="[
+											item?.gamma ? 'tw-min-h-[117px] tw-cursor-pointer  hover:tw-bg-sky-100 hover:tw-border-sky-300' : 'tw-h-[60px]', item?.gamma?.title ? '' : 'tw-bg-gray-100']"
+									>
+									<q-chip
+										v-if="item?.gamma"
+										square
+										color="primary"
+										text-color="white"
+									>
+										{{ item.gamma.title }}
+									</q-chip>
+
+									<p v-if="item?.gamma">
+										{{ item.gamma.summary }}
+									</p>
+								</div>
+
+								<div
+									v-if="index == 0"
+
+										class="tw-w-[100px] tw-border-2 tw-px-4 tw-py-2 tw-h-[60px] "
+										:class="isWeekend(day.fullDate) ? 'tw-bg-slate-200' : 'tw-bg-slate-100'"
+									>
+									<div class="tw-text-center tw-font-[500] tw-text-zinc-500">
+										{{ day.label }}
+									</div>
+									<div class="tw-text-center tw-font-[800] tw-text-zinc-500">
+										{{ day.date }}
+									</div>
+								</div>
 								<div
 									v-if="item?.gamma"
 									class="tw-w-[100px] tw-items-center tw-justify-items-center tw-border-2 tw-p-2 tw-cursor-pointer hover:tw-bg-sky-100 hover:tw-border-sky-300"
@@ -168,18 +179,7 @@
 
 								</div>
 
-								<div
-									v-else
-										class="tw-w-[100px] tw-border-2 tw-px-4 tw-py-2 tw-h-[60px] "
-										:class="isWeekend(day.fullDate) ? 'tw-bg-slate-200' : 'tw-bg-slate-100'"
-									>
-									<div class="tw-text-center tw-font-[500] tw-text-zinc-500">
-										{{ day.label }}
-									</div>
-									<div class="tw-text-center tw-font-[800] tw-text-zinc-500">
-										{{ day.date }}
-									</div>
-								</div>
+
 							</template>
 						</div>
 					</template>
